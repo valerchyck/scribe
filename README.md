@@ -1,34 +1,13 @@
 # Scribe
 
-[![Latest Stable Version](https://poser.pugx.org/knuckleswtf/scribe/v/stable)](https://packagist.org/packages/knuckleswtf/scribe) [![Total Downloads](https://poser.pugx.org/knuckleswtf/scribe/downloads)](https://packagist.org/packages/knuckleswtf/scribe)
+> https://scribe.readthedocs.io/en/latest/ - оригинальная документация
 
-<p align="center">
-  <img src="logo-scribe.png"><br>
-</p>
-
-
-> [v3 is out now](https://scribe.knuckles.wtf/blog/2021/06/08/laravel-v3)!
-
-Scribe helps you generate API documentation for humans from your Laravel/Lumen/[Dingo](https://github.com/dingo/api) codebase. See a live example at [demo.scribe.knuckles.wtf](https://demo.scribe.knuckles.wtf). There's a [Node.js version](https://github.com/knuckleswtf/scribe-js), too!
-
-## Features
-- Pretty single-page HTML doc, with human-friendly text, code samples, and included in-browser API tester ("Try It Out")
-- Extracts body parameters details from FormRequests or validation rules
-- Safely calls API endpoints to get sample responses
-- Supports generating responses from Transformers or Eloquent API Resources
-- Generates Postman collection and OpenAPI spec
-- Easily customisable with custom views and included UI components
-- Easily extensible with custom strategies
-- Statically define extra endpoints that aren't in your codebase
-
-> 👋 Scribe helps you generate docs automatically, but if you really want to make friendly, maintainable and testable API docs, there's some more things you need to know. So I made [a course](https://apidocsfordevs.com?utm_source=scribe-laravel&utm_medium=referral&utm_campaign=none) for you.🤗
-
-## Documentation
-Check out the documentation at [scribe.knuckles.wtf/laravel](http://scribe.knuckles.wtf/laravel).
-
-v2 docs (PHP 7.2+, not actively maintained) are at [scribe.rtfd.io](http://scribe.rtfd.io).
-
-If you're coming from `mpociot/laravel-apidoc-generator`, there's a [migration guide](https://scribe.knuckles.wtf/laravel/migrating-apidoc).
-
-## Contributing
-Contributing is easy! See our [contribution guide](https://scribe.knuckles.wtf/laravel/contributing).
+## Изменения в файлах:
+- добавлены новые параметры в конфиг [#commit](https://gitlab.ittour.com.ua/root/scribe_api_doc/commit/cf5dc16c9c34dfec9923dc96e5330a1a3bb5d4ae)
+- удален хардкодный "Content-Type" из параметров запроса.
+[#commit](https://gitlab.ittour.com.ua/root/scribe_api_doc/commit/d3004d90443bb7e32645cd3ab9d063fd72857bd9)
+- добавлено документирование входящих параметров запроса основываясь на валидацию через метод "**$this->validate()**". 
+[#commit](https://gitlab.ittour.com.ua/root/scribe_api_doc/commit/5b37b941377d038b06863b5c8a48639f9dc116c4)
+- добавленно общее описание документации для всех сервисов и возможность установки нескольких серверов **API**.
+[#commit](https://gitlab.ittour.com.ua/root/scribe_api_doc/commit/0cec1bd3bd43c118449b81ac955aeb56f87cbc20)
+- удалена проверка параметров конфига (потому-что мы внесли новые). удалена запись кэша при генерации доки (тормозит генерацию). добавлена генерация приватного yaml (для внутреннего пользования) [#commit](https://gitlab.ittour.com.ua/root/scribe_api_doc/commit/f4ca11e3939f0ebe20952b3dc37049afa4a1332b)
