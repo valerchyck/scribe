@@ -21,6 +21,10 @@ return [
      */
     'base_url' => null,
 
+    'servers' => [],
+
+    'private_endpoints' => [],
+
     /*
      * Tell Scribe what routes to generate documentation for.
      * Each group contains rules defining which routes should be included ('match', 'include' and 'exclude' sections)
