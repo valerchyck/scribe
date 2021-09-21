@@ -43,11 +43,12 @@ class GetFromInlineValidatorBase extends Strategy
             $rvalue = $validationAssignmentExpression->expr;
 
             // Look for $validated = $request->validate(...)
-            if (
-                $rvalue instanceof Node\Expr\MethodCall && $rvalue->var instanceof Node\Expr\Variable
-                && in_array($rvalue->var->name, ["request", "req"]) && $rvalue->name->name == "validate"
-            ) {
-                $validationRules = $rvalue->args[0]->value;
+            if ($rvalue instanceof Node\Expr\MethodCall && $rvalue->var instanceof Node\Expr\Variable && $rvalue->name->name == "validate") {
+                if (in_array($rvalue->var->name, ["request", "req"])) {
+                    $validationRules = $rvalue->args[0]->value;
+                } else if ($rvalue->var->name == "this") {
+                    $validationRules = $rvalue->args[1]->value;
+                }
                 break;
             } else if (
                 // Try $validator = Validator::make(...)
