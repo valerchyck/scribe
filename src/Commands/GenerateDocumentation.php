@@ -54,8 +54,6 @@ class GenerateDocumentation extends Command
             c::warn('Generated docs, but encountered some errors while processing routes.');
             c::warn('Check the output above for details.');
         }
-
-        $this->upgradeConfigFileIfNeeded();
     }
 
     public function isForcing(): bool

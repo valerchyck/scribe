@@ -3,6 +3,7 @@
 namespace Knuckles\Scribe\Writing;
 
 use Illuminate\Support\Facades\Storage;
+use Knuckles\Camel\Output\OutputEndpointData;
 use Knuckles\Scribe\Tools\ConsoleOutputUtils as c;
 use Knuckles\Scribe\Tools\DocumentationConfig;
 use Knuckles\Scribe\Tools\Utils;
@@ -69,17 +70,36 @@ class Writer
         if ($this->config->get('openapi.enabled', false)) {
             c::info('Generating OpenAPI specification');
 
-            $spec = $this->generateOpenAPISpec($parsedRoutes);
-            if ($this->isStatic) {
-                $specPath = "{$this->staticTypeOutputPath}/openapi.yaml";
-                file_put_contents($specPath, $spec);
-            } else {
-                Storage::disk('local')->put('scribe/openapi.yaml', $spec);
-                $specPath = 'storage/app/scribe/openapi.yaml';
-            }
+            $this->writeOpenAPI($parsedRoutes);
 
-            c::success("Wrote OpenAPI specification to: {$specPath}");
+            if (!empty($this->config->get('private_endpoints'))) {
+                foreach ($parsedRoutes as $key => &$parsedRoute) {
+                    $parsedRoute['endpoints'] = array_filter($parsedRoute['endpoints'], function (OutputEndpointData $endPoint) {
+                        return !in_array($endPoint->uri, $this->config->get('private_endpoints'));
+                    });
+
+                    if (empty($parsedRoute['endpoints'])) {
+                        unset($parsedRoutes[$key]);
+                    }
+                }
+
+                $this->writeOpenAPI($parsedRoutes, 'openapi_public');
+            }
         }
+    }
+
+    private function writeOpenAPI($parsedRoutes, $filename = 'openapi_private')
+    {
+        $spec = $this->generateOpenAPISpec($parsedRoutes);
+        if ($this->isStatic) {
+            $specPath = "{$this->staticTypeOutputPath}/$filename.yaml";
+            file_put_contents($specPath, $spec);
+        } else {
+            Storage::disk('local')->put("scribe/$filename.yaml", $spec);
+            $specPath = "storage/app/scribe/$filename.yaml";
+        }
+
+        c::success("Wrote OpenAPI specification to: {$specPath}");
     }
 
     /**
