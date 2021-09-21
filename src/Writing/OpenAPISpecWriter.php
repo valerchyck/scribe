@@ -49,14 +49,12 @@ class OpenAPISpecWriter
             'openapi' => self::VERSION,
             'info' => [
                 'title' => $this->config->get('title') ?: config('app.name', ''),
-                'description' => $this->config->get('description', ''),
+                'description' => $this->config->get('description', '') . '<br/><br/>' . $this->config->get('main_description', ''),
                 'version' => '1.0.0',
             ],
-            'servers' => [
-                [
-                    'url' => rtrim($this->config->get('base_url') ?? config('app.url'), '/'),
-                ],
-            ],
+            'servers' => array_map(function ($item) {
+                return ['url' => $item];
+            }, $this->config->get('servers')),
             'paths' => $this->generatePathsSpec($groupedEndpoints),
             'tags' => array_map(function (array $group) {
                 return [
