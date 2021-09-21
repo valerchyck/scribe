@@ -99,10 +99,6 @@ class Extractor
         $this->fetchBodyParameters($endpointData, $routeRules);
         $endpointData->cleanBodyParameters = self::cleanParams($endpointData->bodyParameters);
 
-        if (count($endpointData->cleanBodyParameters) && !isset($endpointData->headers['Content-Type'])) {
-            // Set content type if the user forgot to set it
-            $endpointData->headers['Content-Type'] = 'application/json';
-        }
         // We need to do all this so response calls can work correctly,
         // even though they're only needed for output
         // Note that this
