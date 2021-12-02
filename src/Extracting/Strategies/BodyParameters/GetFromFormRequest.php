@@ -7,7 +7,7 @@ use ReflectionClass;
 
 class GetFromFormRequest extends GetFromFormRequestBase
 {
-    protected string $customParameterDataMethodName = 'bodyParameters';
+    protected string $customParameterDataMethodName = 'rules';
 
     protected function isFormRequestMeantForThisStrategy(ReflectionClass $formRequestReflectionClass): bool
     {

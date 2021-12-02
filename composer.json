@@ -34,7 +34,8 @@
     "shalvah/upgrader": "0.*",
     "spatie/data-transfer-object": "^2.6|^3.0",
     "symfony/var-exporter": "^4.0|^5.0",
-    "symfony/yaml": "^4.0|^5.0"
+    "symfony/yaml": "^4.0|^5.0",
+    "pearl/lumen-request-validate": "^1.6"
   },
   "require-dev": {
     "brianium/paratest": "^6.0",

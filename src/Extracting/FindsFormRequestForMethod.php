@@ -4,6 +4,7 @@ namespace Knuckles\Scribe\Extracting;
 
 use Illuminate\Foundation\Http\FormRequest as LaravelFormRequest;
 use Dingo\Api\Http\FormRequest as DingoFormRequest;
+use Pearl\RequestValidate\RequestAbstract;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionFunctionAbstract;
@@ -38,7 +39,8 @@ trait FindsFormRequestForMethod
 
             if (
                 (class_exists(LaravelFormRequest::class) && $argumentClass->isSubclassOf(LaravelFormRequest::class))
-                || (class_exists(DingoFormRequest::class) && $argumentClass->isSubclassOf(DingoFormRequest::class))) {
+                || (class_exists(DingoFormRequest::class) && $argumentClass->isSubclassOf(DingoFormRequest::class))
+                || (class_exists(RequestAbstract::class) && $argumentClass->isSubclassOf(RequestAbstract::class))) {
                 return $argumentClass;
             }
         }
